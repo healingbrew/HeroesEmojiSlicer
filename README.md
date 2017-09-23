@@ -1,5 +1,5 @@
 # HeroesEmojiSlicer
-Slice and Dice ![:abacool:](//i.imgur.com/cEUaVLY.png)
+Slice and Dice ![:abacool:](https://i.imgur.com/cEUaVLY.png)
 
 # Installation
 
