@@ -5,6 +5,7 @@ Slice and Dice ![:abacool:](https://i.imgur.com/cEUaVLY.png)
 
 - Python 2.7
 - `pip install Pillow`
+- ImageMagick (for conversion)
 
 # Extract
 
