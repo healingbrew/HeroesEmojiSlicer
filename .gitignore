@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+*.xml
+*.dds
+*.png
+*.txt
+!.gitkeep
+
+emoji
