@@ -19,11 +19,18 @@ Destination is `data/sheets`
 
 - `mods/heroes.stormmod/base.stormassets/Assets/Textures/storm_emoji_*.dds`
 
+So the `data` directory should look like
+
+```
+data/EmoticonPackData.xml
+data/EmoticonData.xml
+data/GameStrings.txt
+data/sheets/storm_emoji_abathur_sheet.dds
+```
+
 # Conversion
 
-In `data/sheets`
-
-`mogrify -format png *.dds`
+In `data/sheets` execute `mogrify -format png *.dds` (ImageMagick must be in the PATH)
 
 # Usage
 
