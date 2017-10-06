@@ -1,6 +1,8 @@
 # HeroesEmojiSlicer
 Slice and Dice ![:abacool:](https://i.imgur.com/cEUaVLY.png)
 
+Download [here](https://github.com/naomichan/HeroesEmojiSlicer/archive/master.zip)
+
 # Installation
 
 - Python 2.7
