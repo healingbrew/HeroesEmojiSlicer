@@ -20,12 +20,24 @@ for CEmoticon in EmoticonData:
     if Image != None and Image.get("TextureSheet") != None:
         Sheets[CEmoticon.get("id")] = PillowImage.open("data/sheets/%s.png" % Image.get("TextureSheet"))
 
+EmoticonPackDataNormalized = {}
+for CEmoticonPack in EmoticonPackData:
+    if IsHidden(CEmoticon): continue
+    EmoticonPackDataNormalized[CEmoticonPack.get("id")] = CEmoticonPack
+
 for CEmoticonPack in EmoticonPackData:
     if IsHidden(CEmoticonPack): continue
     id = CEmoticonPack.get("id")
 
     PackName = Locale.EmoticonPack.Name[id]
-    CategoryName = Locale.CollectionCategory.Name[CEmoticonPack.find("CollectionCategory").get("value")]
+
+    CategoryName = None
+    if CEmoticonPack.find("CollectionCategory") is not None:
+        CategoryName = Locale.CollectionCategory.Name[CEmoticonPack.find("CollectionCategory").get("value")]
+    else:
+        Parent = EmoticonPackDataNormalized[CEmoticonPack.get("parent")]
+        CategoryName = "%s/%s" % (Locale.CollectionCategory.Name[Parent.find("CollectionCategory").get("value")], Parent.find("EventName").get("value"))
+        print CategoryName
     for EmoticonArray in CEmoticonPack.findall("EmoticonArray"):
         Emoticon = EmoticonDataNormalized[EmoticonArray.get("value")]
         Sheet = None
