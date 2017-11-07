@@ -1,10 +1,13 @@
 # HeroesEmojiSlicer
-Slice and Dice ![:abacool:](//i.imgur.com/cEUaVLY.png)
+Slice and Dice ![:abacool:](https://i.imgur.com/cEUaVLY.png)
+
+Download [here](https://github.com/naomichan/HeroesEmojiSlicer/archive/master.zip)
 
 # Installation
 
 - Python 2.7
 - `pip install Pillow`
+- ImageMagick (for conversion)
 
 # Extract
 
@@ -18,14 +21,21 @@ Destination is `data/sheets`
 
 - `mods/heroes.stormmod/base.stormassets/Assets/Textures/storm_emoji_*.dds`
 
+So the `data` directory should look like
+
+```
+data/EmoticonPackData.xml
+data/EmoticonData.xml
+data/GameStrings.txt
+data/sheets/storm_emoji_abathur_sheet.dds
+```
+
 # Conversion
 
-In `data/sheets`
-
-`mogrify -format png *.dds`
+In `data/sheets` execute `mogrify -format png *.dds` (ImageMagick must be in the PATH)
 
 # Usage
 
-`python27 slice.py`
+`python slice.py` or run `slice.bat` to do both conversion and running (requires both Python and ImageMagick to be in the PATH)
 
 Images will be in the "emoji" folder.
