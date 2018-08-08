@@ -13,37 +13,47 @@ EmoticonDataNormalized = {}
 Sheets = {}
 
 for CEmoticon in EmoticonData:
-    if IsHidden(CEmoticon): continue
-    EmoticonDataNormalized[CEmoticon.get("id")] = CEmoticon
+    emoticonId = CEmoticon.get("id")
+    EmoticonDataNormalized[emoticonId] = CEmoticon
 
     Image = CEmoticon.find("Image")
-    if Image != None and Image.get("TextureSheet") != None:
-        Sheets[CEmoticon.get("id")] = PillowImage.open("data/sheets/%s.png" % Image.get("TextureSheet"))
+    if Image != None and Image.get("TextureSheet") != None and len(Image.get("TextureSheet")) > 0:
+        Sheets[emoticonId] = PillowImage.open("data/sheets/%s.png" % Image.get("TextureSheet"))
 
 EmoticonPackDataNormalized = {}
 for CEmoticonPack in EmoticonPackData:
-    if IsHidden(CEmoticon): continue
-    EmoticonPackDataNormalized[CEmoticonPack.get("id")] = CEmoticonPack
+    emoticonId = CEmoticonPack.get("id")
+    EmoticonPackDataNormalized[emoticonId] = CEmoticonPack
+
+SECRET = {
+    "SapperPackBonus": "Sapper Bonus"
+}
 
 for CEmoticonPack in EmoticonPackData:
-    if IsHidden(CEmoticonPack): continue
-    id = CEmoticonPack.get("id")
-
-    PackName = Locale.EmoticonPack.Name[id]
+    emoticonId = CEmoticonPack.get("id")
+    EmoticonArrays = CEmoticonPack.findall("EmoticonArray")
+    if len(EmoticonArrays) == 0: 
+        print("Skipping CEmoticonPack %s" % emoticonId)
+        continue
+    PackName = Locale.EmoticonPack.Name[emoticonId]
+    if PackName is None and emoticonId in SECRET:
+        PackName = SECRET[emoticonId]
 
     CategoryName = None
     if CEmoticonPack.find("CollectionCategory") is not None:
         CategoryName = Locale.CollectionCategory.Name[CEmoticonPack.find("CollectionCategory").get("value")]
     else:
+        if CEmoticonPack.get("parent") not in EmoticonPackDataNormalized:
+            print("Skipping CEmoticonPack %s" % emoticonId)
+            continue
         Parent = EmoticonPackDataNormalized[CEmoticonPack.get("parent")]
         CategoryName = "%s/%s" % (Locale.CollectionCategory.Name[Parent.find("CollectionCategory").get("value")], Parent.find("EventName").get("value"))
-        print CategoryName
-    for EmoticonArray in CEmoticonPack.findall("EmoticonArray"):
+    for EmoticonArray in EmoticonArrays:
         Emoticon = EmoticonDataNormalized[EmoticonArray.get("value")]
         Sheet = None
         if Emoticon.get("id") not in Sheets:
             if Emoticon.get("parent") not in Sheets:
-                print "Missing sheet for %s!" % EmoticonArray.get("value")
+                print("Missing sheet for %s!" % EmoticonArray.get("value"))
                 continue
             else:
                 Sheet = Sheets[Emoticon.get("parent")]

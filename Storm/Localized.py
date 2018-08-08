@@ -1,11 +1,11 @@
-from codecs import open
+import codecs
 
 class Strings(object):
     def __init__(self, data):
         self.data = data;
 
     def Load(self, path):
-        with open(path, "r") as f:
+        with codecs.open(path, "r", "utf8") as f:
             line = f.readline()
             while len(line or "") > 0:
                 line = line.strip()
