@@ -36,6 +36,6 @@ In `data/sheets` execute `mogrify -format png *.dds` (ImageMagick must be in the
 
 # Usage
 
-`python slice.py` or run `slice.bat` to do both conversion and running (requires both Python and ImageMagick to be in the PATH)
+`python slice.py` (requires both Python and ImageMagick to be in the PATH)
 
 Images will be in the "emoji" folder.
