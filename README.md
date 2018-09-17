@@ -7,7 +7,6 @@ Download [here](https://github.com/naomichan/HeroesEmojiSlicer/archive/master.zi
 
 - Python 2.7
 - `pip install Pillow`
-- `pip install imageio`
 - ImageMagick (for conversion)
 
 # Extract

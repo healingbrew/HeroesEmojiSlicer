@@ -4,7 +4,7 @@ from Storm.GameData import Catalog, IsHidden
 from os import makedirs
 from os.path import exists
 from math import floor
-import imageio
+from subprocess import call as CallProcess
 
 Locale = LocalizedStrings({}).Load("data/GameStrings.txt")
 EmoticonData = Catalog("data/EmoticonData.xml")
@@ -71,9 +71,9 @@ for CEmoticonPack in EmoticonPackData:
         Height = 32
             
         if Image.get("DurationPerFrame") is not None:
-            Delay = float(Image.get("DurationPerFrame") or "150.0") / 300.0
+            Delay = float(Image.get("DurationPerFrame") or "150.0") / 600.0
             Count = int(Image.get("Count") or 1)
-            Frames = []
+            Frames = ["convert", "-delay", str(Delay), "-loop", str(0), "-dispose", "Previous"]
             for Index in range(0, Count):
                 X = (Index % 4) * 40
                 Y = int(floor(Index / 4) * 32)
@@ -81,8 +81,9 @@ for CEmoticonPack in EmoticonPackData:
                 Frame = Sheet.crop(Box)
                 if not exists("%s_frames" % SlicedEmojiFilename): makedirs("%s_frames" % SlicedEmojiFilename)
                 Frame.save("%s_frames/%d.png" % (SlicedEmojiFilename, Index))
-                Frames.append(imageio.imread("%s_frames/%d.png" % (SlicedEmojiFilename, Index)))
-            imageio.mimsave("%s.gif" % SlicedEmojiFilename, Frames, duration=Delay)
+                Frames.append("%s_frames/%d.png" % (SlicedEmojiFilename, Index))
+            Frames.append("%s.gif" % SlicedEmojiFilename)
+            CallProcess(Frames, shell=True)
         else:
             Index = int(Image.get("Index") or "0")
             X = (Index % 4) * 40
