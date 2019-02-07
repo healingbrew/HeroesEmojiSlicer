@@ -2,7 +2,7 @@ import codecs
 
 class Strings(object):
     def __init__(self, data):
-        self.data = data;
+        self.data = data
 
     def Load(self, path):
         with codecs.open(path, "r", "utf8") as f:
@@ -28,8 +28,12 @@ class Strings(object):
         return self[key]
 
     def __getitem__(self, key):
+        if type(key) is slice:
+            return self.data[key.start:key.stop:key.step]
         if key in self.data:
             if type(self.data[key]) is str:
+                return self.data[key]
+            if type(self.data[key]) is unicode:
                 return self.data[key]
             return Strings(self.data[key])
 

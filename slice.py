@@ -64,6 +64,7 @@ for CEmoticonPack in EmoticonPackData:
         Image = Emoticon.find("Image")
     
         EmoticonName = Locale.Emoticon.Name[EmoticonArray.get("value")]
+        print("%s (%s) %s" % (PackName, CategoryName, EmoticonName))
         SlicedEmojiPath = "emoji/%s/%s" % (CategoryName, PackName)
         if not exists(SlicedEmojiPath): makedirs(SlicedEmojiPath)
         SlicedEmojiFilename = "%s/%s" % (SlicedEmojiPath, EmoticonName[1:-1])
@@ -73,7 +74,7 @@ for CEmoticonPack in EmoticonPackData:
         if Image.get("DurationPerFrame") is not None:
             Delay = float(Image.get("DurationPerFrame") or "150.0") / 600.0
             Count = int(Image.get("Count") or 1)
-            Frames = ["convert", "-delay", str(Delay), "-loop", str(0), "-dispose", "Previous"]
+            Frames = ["convert", "-delay", str(Delay), "-loop", str(0), "-dispose", "Background"]
             for Index in range(0, Count):
                 X = (Index % 4) * 40
                 Y = int(floor(Index / 4) * 32)
@@ -83,7 +84,7 @@ for CEmoticonPack in EmoticonPackData:
                 Frame.save("%s_frames/%d.png" % (SlicedEmojiFilename, Index))
                 Frames.append("%s_frames/%d.png" % (SlicedEmojiFilename, Index))
             Frames.append("%s.gif" % SlicedEmojiFilename)
-            CallProcess(Frames, shell=True)
+            CallProcess(Frames, shell=False)
         else:
             Index = int(Image.get("Index") or "0")
             X = (Index % 4) * 40
