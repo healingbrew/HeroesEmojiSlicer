@@ -1,41 +1,38 @@
-# HeroesEmojiSlicer
-Slice and Dice ![:abacool:](https://i.imgur.com/cEUaVLY.png)
+# HeroesToolkit
 
-Download [here](https://github.com/naomichan/HeroesEmojiSlicer/archive/master.zip)
+Series of tools for parsing Heroes of the Storm files into human-friendly data.
 
-# Installation
+## HeroesEmojiSlicer
 
-- Python 2.7
-- `pip install Pillow`
+Slice and Dice ![:orphcool:](https://i.imgur.com/3OmnEDg.png)
+
+A tool for slicing emoji sprite sheets and reconstructing animated emoji.
+
+### Installation
+
+- Python 3.6+
+- `pip3 install Pillow`
 - ImageMagick (for conversion)
 
-# Extract
-
-Destination is `data`
+### Extract
 
 - `mods/heroesdata.stormmod/base.stormdata/GameData/EmoticonPackData.xml`
 - `mods/heroesdata.stormmod/base.stormdata/GameData/EmoticonData.xml`
 - `mods/heroesdata.stormmod/enus.stormdata/LocalizedData/GameStrings.txt`
-
-Destination is `data/sheets`
-
 - `mods/heroes.stormmod/base.stormassets/Assets/Textures/storm_emoji_*.dds`
 
-So the `data` directory should look like
+### Usage
 
-```
-data/EmoticonPackData.xml
-data/EmoticonData.xml
-data/GameStrings.txt
-data/sheets/storm_emoji_abathur_sheet.dds
-```
-
-# Conversion
-
-In `data/sheets` execute `mogrify -format png *.dds` (ImageMagick must be in the PATH)
-
-# Usage
-
-`python slice.py` (requires both Python and ImageMagick to be in the PATH)
+`python slice.py path_to_mods enus`
 
 Images will be in the "emoji" folder.
+
+## MissingSkinFinder
+
+Who'se that variation?! ![:orphoops:](https://i.imgur.com/hFl088z.png)
+
+Parses catalog data to search for missing/unobtainable rewards.
+
+### Usage
+
+`python catalog.py path_to_mods path_to_programdata_blizzardent enus`
