@@ -2,9 +2,9 @@
 
 Series of tools for parsing Heroes of the Storm files into human-friendly data.
 
-## HeroesEmojiSlicer
+## HeroesEmojiSlicer ![:orphcool:](https://i.imgur.com/3OmnEDg.png)
 
-Slice and Dice ![:orphcool:](https://i.imgur.com/3OmnEDg.png)
+Slice and Dice.
 
 A tool for slicing emoji sprite sheets and reconstructing animated emoji.
 
@@ -27,9 +27,9 @@ A tool for slicing emoji sprite sheets and reconstructing animated emoji.
 
 Images will be in the "emoji" folder.
 
-## MissingSkinFinder
+## MissingSkinFinder ![:orphoops:](https://i.imgur.com/hFl088z.png)
 
-Who'se that variation?! ![:orphoops:](https://i.imgur.com/hFl088z.png)
+Who'se that variation?!
 
 Parses catalog data to search for missing/unobtainable rewards.
 
