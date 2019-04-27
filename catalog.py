@@ -57,8 +57,10 @@ def parseRewards(CEntries, Region, Economy, Locale, CatalogTree, RewardEntries):
             print_utf8('\tInfo: %s' % Locale.get(CInfoText.get('value')))
 
         CSortName = CEntry.find('SortName')
+        SortName = ''
         if CSortName != None:
-            print_utf8('\tSort Name: %s' % Locale.get(CSortName.get('value')))
+            SortName = Locale.get(CSortName.get('value'))
+            print_utf8('\tSort Name: %s' % SortName)
         
         CRarity = CEntry.find('Rarity')
         if CRarity == None:
@@ -80,8 +82,10 @@ def parseRewards(CEntries, Region, Economy, Locale, CatalogTree, RewardEntries):
             print_utf8('\tCategory: %s' % CCollectionCategory.get('value'))
         
         CHyperlinkId = CEntry.find('HyperlinkId')
+        CHyperlink = ''
         if CHyperlinkId != None:
-            print_utf8('\tHyperlink: battlenet://heroes/%s/%s/%s' % (CType.lower(), Region, CHyperlinkId.get('value')))
+            CHyperlink = 'battlenet://heroes/%s/%s/%s' % (CType.lower(), Region, CHyperlinkId.get('value'))
+            print_utf8('\tHyperlink: %s' % CHyperlink)
         
         CEventName = CEntry.find('EventName')
         if CEventName != None:
@@ -124,16 +128,10 @@ def parseRewards(CEntries, Region, Economy, Locale, CatalogTree, RewardEntries):
         if CType == 'VoiceLine': continue
 
         if CProductId != None:
-            if CName != CId:
-                MissingProducts.append('%s (%s)' % (CName, CId))
-            else:
-                MissingProducts.append(CId)
+            MissingProducts.append('%s (%s) %s %s' % (CName, CId, CHyperlink, SortName))
 
         if len(LicenseIds) > 0:
-            if CName != CId:
-                MissingLicenses.append('%s (%s)' % (CName, CId))
-            else:
-                MissingLicenses.append(CId)
+            MissingLicenses.append('%s (%s) %s %s' % (CName, CId, CHyperlink, SortName))
 
 RootDir = argv[1]
 RootDirLength = len(RootDir)
