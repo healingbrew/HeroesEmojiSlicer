@@ -31,7 +31,7 @@ Images will be in the "emoji" folder.
 
 Who'se that variation?!
 
-Parses catalog data to search for missing/unobtainable rewards.
+Parses catalog data to list rewards and search for missing/unobtainable rewards.
 
 ### Usage
 

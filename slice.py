@@ -7,16 +7,25 @@ from math import floor
 from subprocess import call as CallProcess
 from sys import argv
 
+def print_utf8(text):
+    print(text.encode('utf-8'))
+
+if __name__ != '__main__':
+    print_utf8('slice.py is a CLI file, not a module')
+    exit(-1)
+
 if len(argv) < 2:
-    print('Usage: python %s path_to_mods [locale]' % (argv[0]))
+    print_utf8('Usage: python %s path_to_mods_parent_dir [locale]' % (argv[0]))
     exit(1)
 
 RootDir = argv[1]
-RootLocale = argv[2] or 'enus'
+RootLocale = 'enus'
+if len(argv) > 2:
+    RootLocale = argv[2]
 
-Locale = LocalizedStrings({}).Load('%s/heroesdata.stormmod/%s.stormdata/LocalizedData/GameStrings.txt' % (RootDir, RootLocale))
-EmoticonData = Catalog('%s/heroesdata.stormmod/base.stormdata/GameData/EmoticonData.xml' % RootDir)
-EmoticonPackData = Catalog('%s/heroesdata.stormmod/base.stormdata/GameData/EmoticonPackData.xml' % RootDir)
+Locale = LocalizedStrings({}).Load('%s/mods/heroesdata.stormmod/%s.stormdata/LocalizedData/GameStrings.txt' % (RootDir, RootLocale))
+EmoticonData = Catalog('%s/mods/heroesdata.stormmod/base.stormdata/GameData/EmoticonData.xml' % RootDir)
+EmoticonPackData = Catalog('%s/mods/heroesdata.stormmod/base.stormdata/GameData/EmoticonPackData.xml' % RootDir)
 
 EmoticonDataNormalized = {}
 Sheets = {}
@@ -32,9 +41,9 @@ for CEmoticon in EmoticonData:
     Image = CEmoticon.find('Image')
     if Image != None and Image.get('TextureSheet') != None and len(Image.get('TextureSheet')) > 0:
         TextureSheet = Image.get('TextureSheet')
-        TextureSheetPath = '%s/heroes.stormmod/base.stormassets/Assets/Textures/%s.dds' % (RootDir, TextureSheet)
+        TextureSheetPath = '%s/mods/heroes.stormmod/base.stormassets/Assets/Textures/%s.dds' % (RootDir, TextureSheet)
         if not exists(TextureSheetPath):
-            print('Can\'t find %s!' % TextureSheetPath)
+            print_utf8('Can\'t find %s!' % TextureSheetPath)
             continue
         CallProcess(['convert', TextureSheetPath, '-format', 'png', '%s/%s.png' % (TempPath, TextureSheet)], shell=False)
         Sheets[emoticonId] = PillowImage.open('%s/%s.png' % (TempPath, TextureSheet))
@@ -52,7 +61,7 @@ for CEmoticonPack in EmoticonPackData:
     emoticonId = CEmoticonPack.get('id')
     EmoticonArrays = CEmoticonPack.findall('EmoticonArray')
     if len(EmoticonArrays) == 0: 
-        print('Skipping CEmoticonPack %s' % emoticonId)
+        print_utf8('Skipping CEmoticonPack %s' % emoticonId)
         continue
     PackName = Locale.EmoticonPack.Name[emoticonId]
     if PackName is None and emoticonId in SECRET:
@@ -63,7 +72,7 @@ for CEmoticonPack in EmoticonPackData:
         CategoryName = Locale.CollectionCategory.Name[CEmoticonPack.find('CollectionCategory').get('value')]
     else:
         if CEmoticonPack.get('parent') not in EmoticonPackDataNormalized:
-            print('Skipping CEmoticonPack %s' % emoticonId)
+            print_utf8('Skipping CEmoticonPack %s' % emoticonId)
             continue
         Parent = EmoticonPackDataNormalized[CEmoticonPack.get('parent')]
         CategoryName = '%s/%s' % (Locale.CollectionCategory.Name[Parent.find('CollectionCategory').get('value')], Parent.find('EventName').get('value'))
@@ -72,7 +81,7 @@ for CEmoticonPack in EmoticonPackData:
         Sheet = None
         if Emoticon.get('id') not in Sheets:
             if Emoticon.get('parent') not in Sheets:
-                print('Missing sheet for %s!' % EmoticonArray.get('value'))
+                print_utf8('Missing sheet for %s!' % EmoticonArray.get('value'))
                 continue
             else:
                 Sheet = Sheets[Emoticon.get('parent')]
@@ -82,7 +91,7 @@ for CEmoticonPack in EmoticonPackData:
         Image = Emoticon.find('Image')
     
         EmoticonName = Locale.Emoticon.Name[EmoticonArray.get('value')]
-        print('%s (%s) %s' % (PackName, CategoryName, EmoticonName))
+        print_utf8('%s (%s) %s' % (PackName, CategoryName, EmoticonName))
         SlicedEmojiPath = 'emoji/%s/%s' % (CategoryName, PackName)
         if not exists(SlicedEmojiPath): makedirs(SlicedEmojiPath)
         SlicedEmojiFilename = '%s/%s' % (SlicedEmojiPath, EmoticonName[1:-1])
