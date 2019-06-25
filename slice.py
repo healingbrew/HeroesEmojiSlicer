@@ -107,6 +107,7 @@ for CEmoticonPack in EmoticonPackData:
                 Y = int(floor(Index / 4) * 32)
                 Box = (X, Y, X + Width, Y + Height)
                 Frame = Sheet.crop(Box)
+                if not Frame.getbbox(): continue
                 if not exists('%s_frames' % SlicedEmojiFilename): makedirs('%s_frames' % SlicedEmojiFilename)
                 Frame.save('%s_frames/%d.png' % (SlicedEmojiFilename, Index))
                 Frames.append('%s_frames/%d.png' % (SlicedEmojiFilename, Index))
