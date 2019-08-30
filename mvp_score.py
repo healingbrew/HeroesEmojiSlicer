@@ -81,7 +81,8 @@ for player in players:
     mvp_score += score['SoloKill'] * 1.0
     mvp_score += score['Assists'] * get_mvp_assist_award_amount(player['hero'])
     mvp_score_ok = mvp_score
-    mvp_score += float(score['TimeSpentDead']) / header['m_elapsedGameLoops'] * 100 * get_mvp_time_spend_dead_award_amount(player['hero'])
+    penalty = float(score['TimeSpentDead']) / header['m_elapsedGameLoops'] * 100 * get_mvp_time_spend_dead_award_amount(player['hero'])
+    mvp_score += penalty
     mvp_score_base = mvp_score
     if score['HeroDamage'] >= max_amount[MAX_HERO][player['team']]: mvp_score += 1
     if score['SiegeDamage'] >= max_amount[MAX_SIEGE][player['team']]: mvp_score += 1
@@ -94,7 +95,7 @@ for player in players:
     if score['PlaysWarrior'] == 1: throughput += 2.0 * (float(score['DamageTaken']) /  max_amount[MAX_TANK][2]) # might be DamageSoaked
     if score['PlaysSupport'] == 1: throughput += 2.0 * (float(score['Healing']) /  max_amount[MAX_HEAL][2])
     throughput += 2.0 * (float(score['ExperienceContribution']) /  max_amount[MAX_EXP][2])
-    player['mvp'] = [mvp_score, throughput, float(score['TimeSpentDead']) / header['m_elapsedGameLoops'] * 100 * get_mvp_time_spend_dead_award_amount(player['hero']), mvp_score_ok, mvp_score - mvp_score_base]
+    player['mvp'] = [mvp_score, throughput, penalty, mvp_score_ok, mvp_score - mvp_score_base]
 
 top = True
 
@@ -110,4 +111,4 @@ for player in sorted(players, key = lambda x: int(x['mvp'][0] + x['mvp'][1]), re
     if top: 
         mvp = ' - MVP'
         top = False
-    print('Team %s - %s - %s - %.2f - BTPKS %.2f / %.2f / %.2f / %02d / %01d%s' % (team_name, player['name'].rjust(max_width[0], ' '), player['hero'].rjust(max_width[1], ' '), mvp_score + throughput, mvp_score, throughput, penalty, mvp_score_ok, mvp_score_base, mvp))
+    print('Team %s - %s - %s - %.2f - BTPKSF %.2f / %.2f / %.2f / %02d / %01d / %.2fs%s' % (team_name, player['name'].rjust(max_width[0], ' '), player['hero'].rjust(max_width[1], ' '), mvp_score + throughput, mvp_score, throughput, penalty, mvp_score_ok, mvp_score_base, float(player['score']['OnFireTimeOnFire']) / 4, mvp))
