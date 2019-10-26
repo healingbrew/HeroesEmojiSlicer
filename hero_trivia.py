@@ -27,7 +27,7 @@ if len(argv) > 2:
 
 GameDataList = ['%s/heroesdata.stormmod' % RootDir]
 GameDataList += list(map(lambda x: '%s/%s/' % (RootDir, x.get('value').lower()[5:]), Catalog('%s/heroesdata.stormmod/base.stormdata/Includes.xml' % RootDir)))
-print('Id\tParent\tName\tRadius\tInner Radius\tFlags\tBehaviorFlags')
+print('Id\tName\tRadius\tInner Radius\tFlags\tBehaviorFlags')
 for gameDataDir in GameDataList:
     gameDataPath = '%s/base.stormdata/GameData.xml' % gameDataDir
     if not exists(gameDataPath):
@@ -55,4 +55,4 @@ for gameDataDir in GameDataList:
             if len(CUnitFlags) == 0: CUnitFlags = ['Inherited']
             CUnitBehaviors = set(filter(lambda x: x is not None and (x.startswith('HeroGeneric') or x == 'UltimateEvolutionInvalidTarget'), map(lambda x: x.get('Link'), CUnit.findall('BehaviorArray'))))
             if len(CUnitBehaviors) == 0: CUnitBehaviors = ['Inherited']
-            print('%s\t%s\t%s\t%s\t%s\t%s\t%s' % (CUnitId, CUnitParent, CUnitName, CUnitRadius, CUnitInnerRadius, ', '.join(CUnitFlags), ', '.join(CUnitBehaviors)))
+            print('%s\t%s\t%s\t%s\t%s\t%s' % (CUnitId, CUnitName, CUnitRadius, CUnitInnerRadius, ', '.join(CUnitFlags), ', '.join(CUnitBehaviors)))

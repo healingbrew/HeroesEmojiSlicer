@@ -23,7 +23,7 @@ A tool for slicing emoji sprite sheets and reconstructing animated emoji.
 
 ### Usage
 
-`python slice.py path_to_mods enus`
+`python slice.py path_to_mods [enus]`
 
 Images will be in the "emoji" folder.
 
@@ -35,4 +35,14 @@ Parses catalog data to list rewards and search for missing/unobtainable rewards.
 
 ### Usage
 
-`python catalog.py path_to_mods path_to_programdata_blizzardent enus`
+`python catalog.py path_to_mods path_to_programdata_blizzardent [enus [us]]`
+
+## HeroTrivia ![:pachgold:](https://i.imgur.com/ArA710D.png)
+
+Now you can know how tiny hitboxes are too.
+
+Parses catalog data to list miscellaneous info from heroes.
+
+### Usage
+
+`python hero_trivia.py path_to_mods [enus]`
