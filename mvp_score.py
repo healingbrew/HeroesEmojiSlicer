@@ -86,13 +86,13 @@ for player in players:
     mvp_score_base = mvp_score
     if score['HeroDamage'] >= max_amount[MAX_HERO][player['team']]: mvp_score += 1
     if score['SiegeDamage'] >= max_amount[MAX_SIEGE][player['team']]: mvp_score += 1
-    if player['winner'] == 1 and score['PlaysWarrior'] == 1 and score['DamageTaken'] >= max_amount[MAX_TANK][player['team']]: mvp_score += 0.5 # might be DamageSoaked
+    if player['winner'] == 1 and score['PlaysWarrior'] == 1 and score['DamageSoaked'] >= max_amount[MAX_TANK][player['team']]: mvp_score += 0.5 # might be DamageTaken
     if score['PlaysSupport'] == 1 and score['Healing'] >= max_amount[MAX_HEAL][player['team']]: mvp_score += 1
     if score['ExperienceContribution'] >= max_amount[MAX_EXP][player['team']]: mvp_score += 1
     throughput = 0.0
     throughput += 2.0 * (float(score['HeroDamage']) /  max_amount[MAX_HERO][2])
     throughput += 2.0 * (float(score['SiegeDamage']) /  max_amount[MAX_SIEGE][2])
-    if score['PlaysWarrior'] == 1: throughput += 2.0 * (float(score['DamageTaken']) /  max_amount[MAX_TANK][2]) # might be DamageSoaked
+    if score['PlaysWarrior'] == 1: throughput += 2.0 * (float(score['DamageSoaked']) /  max_amount[MAX_TANK][2]) # might be DamageTaken
     if score['PlaysSupport'] == 1: throughput += 2.0 * (float(score['Healing']) /  max_amount[MAX_HEAL][2])
     throughput += 2.0 * (float(score['ExperienceContribution']) /  max_amount[MAX_EXP][2])
     player['mvp'] = [mvp_score, throughput, penalty, mvp_score_ok, mvp_score - mvp_score_base]

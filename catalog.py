@@ -14,7 +14,7 @@ if __name__ != '__main__':
     exit(-1)
 
 if len(argv) < 2:
-    print_utf8('Usage: python %s path_to_mods_parent_dir [path_to_program_data [locale [region]]]' % (argv[0]))
+    print_utf8('Usage: python %s path_to_mods_dir [path_to_program_data [locale [region]]]' % (argv[0]))
     exit(1)
 
 MissingProducts = []
@@ -155,8 +155,8 @@ print_utf8('Loading economy data')
 Depot = DepotIndex(RootDepotDir)
 EconomyCatalogs = list(map(lambda x: DepotCataFile(x.path), Depot.cata))
 
-GameDataList = ['%s/mods/heroesdata.stormmod' % RootDir]
-GameDataList += list(map(lambda x: '%s/%s/' % (RootDir, x.get('value').lower()), Catalog('%s/mods/heroesdata.stormmod/base.stormdata/Includes.xml' % RootDir)))
+GameDataList = ['%s/heroesdata.stormmod' % RootDir]
+GameDataList += list(map(lambda x: '%s/%s/' % (RootDir, x.get('value').lower()[5:]), Catalog('%s/heroesdata.stormmod/base.stormdata/Includes.xml' % RootDir)))
 
 CRewardById = {}
 CCatalogs = []
@@ -171,7 +171,7 @@ for gameDataDir in GameDataList:
     CCombinedLocale = LocalizedStrings(CCombinedLocale).Load('%s/%s.stormdata/LocalizedData/GameStrings.txt' % (gameDataDir, RootLocale)).data
     GameDataCatalog = Catalog(gameDataPath)
     for CatalogEntry in GameDataCatalog:
-        catalogPath = '%s/base.stormdata/%s' % (gameDataDir, CatalogEntry.get('path'))
+        catalogPath = '%s/base.stormdata/%s' % (gameDataDir, CatalogEntry)
         if not exists(catalogPath):
             print_utf8('Catalog file %s does not exist!' % catalogPath[RootDirLength:])
             continue

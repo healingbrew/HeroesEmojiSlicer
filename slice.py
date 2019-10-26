@@ -15,7 +15,7 @@ if __name__ != '__main__':
     exit(-1)
 
 if len(argv) < 2:
-    print_utf8('Usage: python %s path_to_mods_parent_dir [locale]' % (argv[0]))
+    print_utf8('Usage: python %s path_to_mods_dir [locale]' % (argv[0]))
     exit(1)
 
 RootDir = argv[1]
@@ -23,9 +23,9 @@ RootLocale = 'enus'
 if len(argv) > 2:
     RootLocale = argv[2]
 
-Locale = LocalizedStrings({}).Load('%s/mods/heroesdata.stormmod/%s.stormdata/LocalizedData/GameStrings.txt' % (RootDir, RootLocale))
-EmoticonData = Catalog('%s/mods/heroesdata.stormmod/base.stormdata/GameData/EmoticonData.xml' % RootDir)
-EmoticonPackData = Catalog('%s/mods/heroesdata.stormmod/base.stormdata/GameData/EmoticonPackData.xml' % RootDir)
+Locale = LocalizedStrings({}).Load('%s/heroesdata.stormmod/%s.stormdata/LocalizedData/GameStrings.txt' % (RootDir, RootLocale))
+EmoticonData = Catalog('%s/heroesdata.stormmod/base.stormdata/GameData/EmoticonData.xml' % RootDir)
+EmoticonPackData = Catalog('%s/heroesdata.stormmod/base.stormdata/GameData/EmoticonPackData.xml' % RootDir)
 
 EmoticonDataNormalized = {}
 Sheets = {}
@@ -41,7 +41,7 @@ for CEmoticon in EmoticonData:
     Image = CEmoticon.find('Image')
     if Image != None and Image.get('TextureSheet') != None and len(Image.get('TextureSheet')) > 0:
         TextureSheet = Image.get('TextureSheet')
-        TextureSheetPath = '%s/mods/heroes.stormmod/base.stormassets/Assets/Textures/%s.dds' % (RootDir, TextureSheet)
+        TextureSheetPath = '%s/heroes.stormmod/base.stormassets/Assets/Textures/%s.dds' % (RootDir, TextureSheet)
         if not exists(TextureSheetPath):
             print_utf8('Can\'t find %s!' % TextureSheetPath)
             continue
