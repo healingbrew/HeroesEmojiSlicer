@@ -15,6 +15,8 @@ except:
     print >> sys.stderr, 'Unsupported base build: %d' % baseBuild
     sys.exit(1)
 
+print(type(archive.read_file('replay.tracker.events')))
+
 tracker_events = protocol.decode_replay_tracker_events(archive.read_file('replay.tracker.events'))
 details = protocol.decode_replay_details(archive.read_file('replay.details'))
 
