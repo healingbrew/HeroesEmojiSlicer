@@ -23,7 +23,7 @@ A tool for slicing emoji sprite sheets and reconstructing animated emoji.
 
 ### Usage
 
-`python slice.py path_to_mods [enus]`
+`python extract_emoji.py path_to_mods [enus]`
 
 Images will be in the "emoji" folder.
 

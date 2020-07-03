@@ -9,23 +9,25 @@ class Strings(object):
     def Load(self, path):
         with codecs.open(path, 'r', 'utf8') as f:
             line = f.readline()
-            while len(line or '') > 0:
+            while len(line) > 0:
                 line = line.strip()
                 while u'\ufeff' == line[:1] or u'\uffef' == line[:1]:
                     line = line[1:]
-                (key, value) = line.split('=', 1)
-                parts = key.split('/')
-                d = self.data
-                try:
-                    for partIndex in range(len(parts)):
-                        part = parts[partIndex]
-                        if part not in d:
-                            if partIndex == len(parts) - 1:
-                                d[part] = value
-                            else:
-                                d[part] = {}
-                        d = d[part]
-                except: pass
+                parts = line.split('=', 1)
+                if len(parts) > 1:
+                    (key, value) = parts
+                    parts = key.split('/')
+                    d = self.data
+                    try:
+                        for partIndex in range(len(parts)):
+                            part = parts[partIndex]
+                            if part not in d:
+                                if partIndex == len(parts) - 1:
+                                    d[part] = value
+                                else:
+                                    d[part] = {}
+                            d = d[part]
+                    except: pass
                 line = f.readline()
         return self
 

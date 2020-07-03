@@ -1,4 +1,5 @@
 from struct import unpack_from, calcsize
+from os import stat
 
 class DepotIndexRecord(object):
 
@@ -6,6 +7,7 @@ class DepotIndexRecord(object):
         self.size = size
         self.type = fileType
         self.path = '%sCache%s' % (root, path.replace('\\', '/'))
+        self.time = stat(self.path).st_mtime
 
     def __str__(self): return self.path
 
@@ -26,15 +28,15 @@ class DepotIndex(object):
                 block = unpack_from(fmt, depot.read(fmtSize))
                 text = []
                 while True:
-                    ch = depot.read(1)
-                    if ch == chr(0):
+                    ch = depot.read(1).decode('ascii')
+                    if ch == b'\x00' or ch == chr(0):
                         break
-                    text.append(ch)
-                record = DepotIndexRecord(block[0], block[1], block[2], block[3], block[4][::-1].replace('\0', ''), ''.join(text), self.root)
+                    text.append(str(ch))
+                record = DepotIndexRecord(block[0], block[1], block[2], block[3], str(block[4][::-1].decode('ascii').replace('\0', '')), ''.join(text), self.root)
                 if record.type not in self.types:
                     self.types[record.type] = []
                 self.types[record.type].append(record)
-                depot.read(block[4].count('\0'))
+                depot.read(block[4].decode('ascii').count('\0'))
 
     def __getattr__(self, key):
         return self[key]
