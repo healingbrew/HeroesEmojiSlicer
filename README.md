@@ -11,7 +11,7 @@ A tool for slicing emoji sprite sheets and reconstructing animated emoji.
 ### Installation
 
 - Python 3.6+
-- `pip3 install Pillow`
+- `pip3 install Pillow mpyq`
 - ImageMagick (for conversion)
 
 ### Extract
